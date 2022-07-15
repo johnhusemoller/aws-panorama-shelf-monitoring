@@ -49,7 +49,7 @@ def get_appsync_endpoint(appId):
 def create(event, context):
     appId = event["ResourceProperties"]["AmplifyAppIp"]
     amplify_build_job = amplify.start_job(
-        appId=appId, branchName="main", jobType="RELEASE",
+        appId=appId, jobType="RELEASE",
     )
     helper.Data["jobId"] = amplify_build_job["jobSummary"]["jobId"]
     helper.Data["appId"] = appId
@@ -61,7 +61,7 @@ def poll_create(event, context):
     jobId = helper.Data["jobId"]
     appId = helper.Data["appId"]
 
-    job_status = amplify.get_job(appId=appId, jobId=jobId, branchName="main")["job"][
+    job_status = amplify.get_job(appId=appId, jobId=jobId)["job"][
         "summary"
     ]["status"]
 
